@@ -58,15 +58,12 @@ class mail_config(models.Model):
 			"mail_alias" : self.mail_alias,
 		}
 
-		marshal.dumps(defaultdict(config))
-		marshal.dumps(dict())
-
 		common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
 		uid = common.authenticate(db, username, password, {})		
 
 		models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
 		models.execute_kw(db, uid, password,
-		'res.users', 'create', config)
+		'res.users', 'create', [{"test": "tes"}])
 
 		return
