@@ -21,6 +21,8 @@
 
 from openerp import models, fields, api, _
 import xmlrpclib
+from collections import defaultdict
+import marshal
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -56,6 +58,8 @@ class mail_config(models.Model):
 			"mail_alias" : self.mail_alias,
 		}
 
+		marshal.dumps(defaultdict(config))
+		marshal.dumps(dict())
 
 		common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
 		uid = common.authenticate(db, username, password, {})		
@@ -63,23 +67,6 @@ class mail_config(models.Model):
 		models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
 		models.execute_kw(db, uid, password,
-		'res.users', 'create', [{
-			"postfix_active" : self.postfix_active,
-			"vacation_active" : self.vacation_active,
-			"forward_active" : self.forward_active,
-			"forward_address" : self.forward_address,
-			"forward_cp" : self.forward_cp,
-			"virus_active" : self.virus_active,
-			"spam_active" : self.spam_active,
-			"spam_tag" : self.spam_tag,
-			"spam_tag2" : self.spam_tag2,
-			"spam_killevel" : self.spam_killevel,
-			"maildir" : self.maildir,
-			"transport" : self.transport,
-			"quota" : self.quota,
-			"domain" : self.domain,
-			"password" : self.passwd_mail,
-			"mail_alias" : self.mail_alias,
-		}])
+		'res.users', 'create', config)
 
 		return
