@@ -63,6 +63,6 @@ class mail_config(models.Model):
 		models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
 		models.execute_kw(db, uid, password,
-		'res.users', 'write', [config])
+		'res.users', 'create', config)
 
 		return
