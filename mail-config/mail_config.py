@@ -61,9 +61,8 @@ class mail_config(models.Model):
 		uid = common.authenticate(db, username, password, {})		
 
 		models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+
 		models.execute_kw(db, uid, password,
-		'mail.config.receiver', 'receive_settings',
-		['read'], config)
+		'res.users', 'write', config)
 
 		return
-
