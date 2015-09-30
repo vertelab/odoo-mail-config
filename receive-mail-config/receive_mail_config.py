@@ -9,5 +9,5 @@ class receive_mail_config(models.Model):
 	_description = "Receives mail config with XML-RPC"
 
 	def receive_settings(self):
-		_logger.warn(self)
+		
 		return
