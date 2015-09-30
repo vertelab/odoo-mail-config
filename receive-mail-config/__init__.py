@@ -1,1 +1,0 @@
-import receive_mail_config
