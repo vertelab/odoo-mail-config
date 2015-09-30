@@ -63,6 +63,23 @@ class mail_config(models.Model):
 		models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
 
 		models.execute_kw(db, uid, password,
-		'res.users', 'create', config)
+		'res.users', 'create', [{
+			"postfix_active" : self.postfix_active,
+			"vacation_active" : self.vacation_active,
+			"forward_active" : self.forward_active,
+			"forward_address" : self.forward_address,
+			"forward_cp" : self.forward_cp,
+			"virus_active" : self.virus_active,
+			"spam_active" : self.spam_active,
+			"spam_tag" : self.spam_tag,
+			"spam_tag2" : self.spam_tag2,
+			"spam_killevel" : self.spam_killevel,
+			"maildir" : self.maildir,
+			"transport" : self.transport,
+			"quota" : self.quota,
+			"domain" : self.domain,
+			"password" : self.passwd_mail,
+			"mail_alias" : self.mail_alias,
+		}])
 
 		return
